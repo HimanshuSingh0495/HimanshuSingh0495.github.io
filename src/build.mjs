@@ -32,7 +32,7 @@ ${index ? `<link rel="canonical" href="${url}">` : `<meta name="robots" content=
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${url}">
 <meta name="twitter:card" content="summary">
-${schema.map(jsonLd).join("\n")}
+${path === "" ? `<meta name="google-site-verification" content="3pVkXeMn6NLmBm0w86ij4heuAXZE_CT_HVJjHTwtAHQ">\n` : ""}${schema.map(jsonLd).join("\n")}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&display=swap" rel="stylesheet">

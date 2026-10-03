@@ -1,0 +1,78 @@
+:root {
+  --paper: #edf0f5;
+  --ink: #18202e;
+  --muted: #576173;
+  --rule: #c9d1dd;
+  --accent: #3b4a63;
+  --accent-text: color-mix(in oklab, var(--accent) 88%, black);
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #121821;
+    --ink: #e6ebf2;
+    --muted: #9aa5b6;
+    --rule: #2a3442;
+    --accent-text: color-mix(in oklab, var(--accent) 55%, white);
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--body);
+}
+a { color: inherit; text-decoration-color: var(--accent-text); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+a:hover { color: var(--accent-text); }
+:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 3px; border-radius: 2px; }
+
+.skip { position: absolute; left: -999px; }
+.skip:focus { left: 16px; top: 8px; background: var(--paper); padding: 4px 8px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+header.site, main, footer.site { max-width: 46rem; margin: 0 auto; padding: 0 16px; }
+@media (min-width: 40rem) { header.site, main, footer.site { padding: 0 32px; } }
+
+header.site { display: flex; gap: 0.75rem; align-items: baseline; padding-top: 1.25rem; padding-bottom: 1.25rem; font-family: var(--display); font-weight: 700; }
+header.site .home { text-decoration: none; }
+header.site .crumb { color: var(--muted); font-weight: 500; }
+header.site .crumb::before { content: "/"; margin-right: 0.75rem; color: var(--rule); }
+
+/* The tent: the name for the person facing you, a hinge, then the same name for the person across the table. */
+.tent { font-family: var(--display); font-weight: 800; font-stretch: 78%; letter-spacing: -0.02em; line-height: 0.92; font-size: clamp(2.75rem, 11vw, 5.75rem); margin: 2.5rem 0 1.5rem; overflow-wrap: anywhere; }
+.tent span { display: block; }
+.tent .near { color: var(--ink); }
+.tent .hinge { height: 0; border-top: 2px solid var(--ink); margin: 0.22em 0; width: 100%; }
+.tent .far { color: var(--accent-text); transform: rotate(180deg); opacity: 0.55; }
+@media (prefers-reduced-motion: no-preference) {
+  .tent .far { animation: fold 900ms cubic-bezier(.2,.7,.2,1) both 150ms; transform-origin: 50% 50%; }
+  @keyframes fold { from { transform: rotate(180deg) rotateX(90deg); opacity: 0; } to { transform: rotate(180deg) rotateX(0); opacity: 0.55; } }
+}
+
+.lede { font-size: 1.25rem; line-height: 1.45; max-width: 34ch; margin: 0 0 2.5rem; }
+
+.apps { list-style: none; padding: 0; margin: 0 0 4rem; border-top: 2px solid var(--ink); }
+.apps li { padding: 1.25rem 0 1.25rem 1rem; border-bottom: 1px solid var(--rule); border-left: 4px solid var(--accent); }
+.apps h2 { font: 700 1.6rem/1.15 var(--display); margin: 0 0 0.25rem; }
+.apps h2 a { text-decoration: none; }
+.apps p { margin: 0; max-width: 60ch; }
+.apps .links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin-top: 0.5rem; color: var(--muted); font-size: 0.95rem; }
+
+.app-nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); padding: 0.75rem 0; margin: 0 0 2rem; font-family: var(--display); font-weight: 600; }
+.app-nav a { text-decoration: none; color: var(--muted); }
+.app-nav a[href]:hover { color: var(--ink); }
+.app-nav a[aria-current] { color: var(--ink); box-shadow: inset 0 -3px 0 var(--accent); }
+
+.prose { max-width: 66ch; margin-bottom: 4rem; }
+.prose h1 { font: 800 clamp(2rem, 6vw, 2.75rem)/1.1 var(--display); font-stretch: 85%; margin: 0 0 0.5rem; }
+.prose h2 { font: 700 1.25rem/1.3 var(--display); margin: 2rem 0 0.5rem; }
+.prose .meta { color: var(--muted); margin-top: 0; }
+.faq dt { font-weight: 700; margin-top: 1.25rem; }
+.faq dd { margin: 0.25rem 0 0; }
+
+footer.site { border-top: 1px solid var(--rule); padding-top: 1.25rem; padding-bottom: 2.5rem; color: var(--muted); font-size: 0.9rem; }

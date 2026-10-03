@@ -19,6 +19,11 @@ export const apps = [
     name: "DuoNight",
     accent: "#B83A63",
     line: "A date-night ritual for two, played face to face on one phone.",
+    seo: {
+      title: "DuoNight: Date Night Questions Game for Couples | iPhone",
+      description: "Date night questions and games for couples, played together on one iPhone. Secret answers and guess-your-partner rounds. Free for iPhone and iPhone Duo.",
+      category: "LifestyleApplication",
+    },
     about: [
       "Stand the phone between you and each of you gets your own side of the screen: questions, guesses and little games that are about the two of you, not the phone.",
       "On any iPhone it works flat on the table, passed back and forth.",
@@ -38,6 +43,11 @@ export const apps = [
     name: "Duo Mentalism Kit",
     accent: "#6A4CC0",
     line: "Close-up mentalism effects where the phone keeps the performer's secret.",
+    seo: {
+      title: "Duo Mentalism Kit: Mentalism Magic App for Performers | iPhone",
+      description: "A mentalism and magic app for close-up performers: the spectator sees an ordinary app while your side shows the secret. Free for iPhone and iPhone Duo.",
+      category: "EntertainmentApplication",
+    },
     about: [
       "The spectator sees an ordinary app on their side of the table. Your side quietly shows what you need to know to finish the effect.",
       "Built for working mentalists and keen hobbyists performing for small groups.",
@@ -57,6 +67,11 @@ export const apps = [
     name: "Tarot Table",
     accent: "#8C6A12",
     line: "A reading table for professional tarot readers and the person across from them.",
+    seo: {
+      title: "Tarot Table: Tarot Reading App for Professional Readers | iPhone",
+      description: "A tarot reading app for professional readers: lay spreads, keep your notes private and show the client the cards. Free for iPhone and iPhone Duo.",
+      category: "LifestyleApplication",
+    },
     about: [
       "Your client sees the shuffle, the cut and each card turning over. You see positions, meanings and notes on your own side.",
       "Keep client records and past readings in one place, and send your own payment link when the reading is done.",
@@ -78,6 +93,11 @@ export const apps = [
     name: "DuoSpeak",
     accent: "#16766A",
     line: "Articulation practice for speech therapy sessions, with the scoring kept on the clinician's side.",
+    seo: {
+      title: "DuoSpeak: Articulation Practice App for Speech Therapy | iPhone",
+      description: "Articulation and speech therapy practice for SLP sessions: large picture cards for the client, private scoring for the clinician. Free for iPhone and iPhone Duo.",
+      category: "MedicalApplication",
+    },
     about: [
       "The client sees a large picture, the word and a model recording, and can record and play back their own attempt. The clinician scores, counts and keeps notes on the other side, out of view.",
       "Made for speech-language pathologists in private practice, and for parents practising at home between sessions.",
@@ -100,6 +120,11 @@ export const apps = [
     name: "Listing Table",
     accent: "#2D5BA6",
     line: "A listing presentation that sits on the seller's kitchen table.",
+    seo: {
+      title: "Listing Table: Listing Presentation App for Real Estate Agents | iPhone",
+      description: "A listing presentation app for real estate agents: walk sellers through comps and pricing at the kitchen table while your notes stay private. Free for iPhone.",
+      category: "BusinessApplication",
+    },
     about: [
       "The seller's side shows the home's photos, nearby sales, a net proceeds sheet they can touch, and your marketing plan. Your side shows talk tracks, objection cards and commission scenarios they never see.",
       "When they're ready, send the listing agreement for e-signature before you leave.",
@@ -121,6 +146,11 @@ export const apps = [
     name: "BoothLead Duo",
     accent: "#0E7590",
     line: "Trade-show lead capture where visitors fill in their own details and your notes stay private.",
+    seo: {
+      title: "BoothLead Duo: Trade Show Lead Capture App | iPhone",
+      description: "Trade show and event lead capture: visitors enter their own details, you scan badges and keep private notes, and leads go to your CRM. Free for iPhone.",
+      category: "BusinessApplication",
+    },
     about: [
       "Visitors type their details and give consent on their side. You scan badges, score the lead and dictate notes on yours.",
       "Sign in to share leads with your team and send them to your CRM.",
@@ -146,6 +176,11 @@ export const apps = [
     name: "DuoBoard",
     accent: "#7A5537",
     line: "Mood boards for interior designers, presented across the table with your costs out of sight.",
+    seo: {
+      title: "DuoBoard: Mood Board App for Interior Designers | iPhone",
+      description: "A mood board app for interior designers: build boards from photos and swatches, present to clients, and keep costs and margins private. Free for iPhone.",
+      category: "DesignApplication",
+    },
     about: [
       "Your client sees the room, the finishes and the client price, and can approve items and sign. You see vendor costs, margins and your checklist on your side.",
       "Turn an approved board into a proposal PDF in a few taps.",
@@ -166,6 +201,11 @@ export const apps = [
     name: "SnapTable",
     accent: "#2B7F3C",
     line: "A fast two-player card battler for one phone and two people across a table.",
+    seo: {
+      title: "SnapTable: Two-Player Card Battle Game on One Phone | iPhone",
+      description: "A fast two-player card battler for one iPhone: 3-minute local matches, face-down plays and a simultaneous reveal. Play a friend or the AI. Free for iPhone.",
+      category: "GameApplication",
+    },
     about: [
       "Each of you plays from your own side of the screen, hidden from the other. Bluff, raise the stakes or fold.",
       "Practise against the computer, build your own decks and unlock new card backs and tables as you play.",

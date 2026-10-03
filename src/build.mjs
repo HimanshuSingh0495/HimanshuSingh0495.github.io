@@ -7,9 +7,17 @@ import { apps, developer, effective, supportEmail } from "./apps.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const year = new Date().getFullYear();
+const site = "https://himanshusingh0495.github.io/";
+const sitemap = []; // every indexable page's path, in build order
 
-function page({ title, description, depth, accent, body, current }) {
+// `<` is escaped so text can never close the script element.
+const jsonLd = (data) =>
+  `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`;
+
+function page({ title, description, depth, accent, body, current, path, schema = [], index = true }) {
   const up = "../".repeat(depth);
+  const url = site + path;
+  if (index) sitemap.push(path);
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -17,6 +25,14 @@ function page({ title, description, depth, accent, body, current }) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
+${index ? `<link rel="canonical" href="${url}">` : `<meta name="robots" content="noindex">`}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Duo apps">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(description)}">
+<meta property="og:url" content="${url}">
+<meta name="twitter:card" content="summary">
+${schema.map(jsonLd).join("\n")}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&display=swap" rel="stylesheet">
@@ -29,7 +45,7 @@ ${accent ? `<style>:root{--accent:${accent}}</style>` : ""}
 <main id="main">
 ${body}
 </main>
-<footer class="site"><p>© ${year} ${developer}. Made for iPhone, and for the iPhone Duo folded into a tent.</p></footer>
+<footer class="site"><p>© ${year} ${developer}. Made for iPhone and iPhone Duo.</p></footer>
 </body>
 </html>
 `;
@@ -64,13 +80,32 @@ function appNav(app, here) {
     .join("")}</nav>`;
 }
 
+const crumbs = (a, label, sub) => ({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Duo apps", item: site },
+    { "@type": "ListItem", position: 2, name: a.name, item: `${site}${a.slug}/` },
+    ...(label ? [{ "@type": "ListItem", position: 3, name: label, item: `${site}${a.slug}/${sub}` }] : []),
+  ],
+});
+
 // Index
 out(
   "index.html",
   page({
-    title: "Duo apps",
-    description: "Apps for two people and one iPhone, set between them on the table.",
+    title: "Duo apps: iPhone apps for two people at one table",
+    description: "Apps for two people sharing one iPhone: a date-night game, a card battler, tarot, mentalism, speech therapy and client presentations. Made for iPhone and iPhone Duo.",
     depth: 0,
+    path: "",
+    schema: [
+      { "@context": "https://schema.org", "@type": "WebSite", name: "Duo apps", url: site },
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        itemListElement: apps.map((a, i) => ({ "@type": "ListItem", position: i + 1, url: `${site}${a.slug}/`, name: a.name })),
+      },
+    ],
     body: `
 <section class="intro">
 ${tent("Duo apps")}
@@ -98,9 +133,24 @@ for (const a of apps) {
   out(
     `${a.slug}/index.html`,
     page({
-      title: a.name,
-      description: a.line,
+      title: a.seo.title,
+      description: a.seo.description,
       depth: 1,
+      path: `${a.slug}/`,
+      schema: [
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: a.name,
+          description: a.seo.description,
+          url: `${site}${a.slug}/`,
+          operatingSystem: "iOS 26 or later",
+          applicationCategory: a.seo.category,
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          author: { "@type": "Person", name: developer },
+        },
+        crumbs(a),
+      ],
       accent: a.accent,
       current: a.name,
       body: `
@@ -124,6 +174,7 @@ ${paras(a.about)}
       title: `Privacy policy for ${a.name}`,
       description: `How ${a.name} handles your data.`,
       depth: 2,
+      path: `${a.slug}/privacy/`,
       accent: a.accent,
       current: a.name,
       body: `
@@ -146,8 +197,17 @@ ${a.privacy.map(([h, ps]) => `<h2>${esc(h)}</h2>\n${paras(ps)}`).join("\n")}
     `${a.slug}/support/index.html`,
     page({
       title: `${a.name} support`,
-      description: `Help with ${a.name}.`,
+      description: `Help with ${a.name}: answers to common questions and how to contact support.`,
       depth: 2,
+      path: `${a.slug}/support/`,
+      schema: [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: a.faq.map(([q, ans]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: ans } })),
+        },
+        crumbs(a, "Support", "support/"),
+      ],
       accent: a.accent,
       current: a.name,
       body: `
@@ -169,6 +229,7 @@ ${a.faq.map(([q, ans]) => `<dt>${esc(q)}</dt><dd>${esc(ans)}</dd>`).join("\n")}
       title: `Terms of use for ${a.name}`,
       description: `Terms of use for ${a.name}.`,
       depth: 2,
+      path: `${a.slug}/terms/`,
       accent: a.accent,
       current: a.name,
       body: `
@@ -185,4 +246,32 @@ ${paras(a.terms)}
   );
 }
 
-console.log(`Built index + ${apps.length} apps × 4 pages`);
+// GitHub Pages serves 404.html for unknown paths at any depth, so it uses absolute links.
+out(
+  "404.html",
+  page({
+    title: "Page not found | Duo apps",
+    description: "This page doesn't exist.",
+    depth: 0,
+    path: "404.html",
+    index: false,
+    body: `
+<article class="prose">
+<h1>Page not found</h1>
+<p>That page doesn't exist. <a href="/">See all the Duo apps</a>.</p>
+</article>`,
+  }).replace('href="style.css"', 'href="/style.css"').replace('<a href="" class="home">', '<a href="/" class="home">')
+);
+
+const today = new Date().toISOString().slice(0, 10);
+out(
+  "sitemap.xml",
+  `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemap.map((p) => `<url><loc>${site}${p}</loc><lastmod>${today}</lastmod></url>`).join("\n")}
+</urlset>
+`
+);
+out("robots.txt", `User-agent: *\nAllow: /\n\nSitemap: ${site}sitemap.xml\n`);
+
+console.log(`Built index + ${apps.length} apps × 4 pages, 404, sitemap (${sitemap.length} URLs), robots`);
